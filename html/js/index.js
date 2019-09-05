@@ -39,5 +39,25 @@ window.addEventListener("load", function(){
         ],{color: 'red',weight: '1'}).addTo(mymap);
         
     polygon.bindPopup("<b>Just don't fish over here!</b><br>not allowed!");
+ 
+    d3.csv('resources/fishprob.csv').then(function(data){
+        
+        var keys = Object.keys(data[0]);    
+        var heatmap = []
+        
+        for(var ii = 0; ii<data.length; ii++){
+            
+            heatmap.push([data[ii][keys[0]], data[ii][keys[1]],data[ii][keys[2]]]);
+            
+        }
+        
+        var heat = L.heatLayer(heatmap, 
+                               {radius: 5}).addTo(mymap);
+
+        
+        });
+    
+    console.log("dat workd jo!")        
+    
     
 });
