@@ -29,7 +29,7 @@ title_pollutant = (data[0][29]) #S27_altlabel
 ltime,llongitude,llatitude,lvalue,lunit,lpollutant = [],[],[],[],[],[]
 k = 0
 for i in range(1,len(data)):
-    time = data[i][2]
+    time = data[i][19]
     longitude = data[i][3]
     latitude = data[i][4]
     value = data[i][21]
@@ -37,14 +37,13 @@ for i in range(1,len(data)):
     pollutant = data[i][29]
     if len(time) !=0 and len(longitude) !=0 and len(latitude) !=0 and len(value) !=0 and unit == 'ug/kg'  and pollutant in ['As','Cd','Pb','total_Hg','Zn']:
         k+=1
-        ltime.append(data[i][2])
+        ltime.append(data[i][19])
         llongitude.append(data[i][3])
         llatitude.append(data[i][4])
         lvalue.append(data[i][21])
         lunit.append(data[i][23])
         lpollutant.append(data[i][29])
 #print(k)
-
 """
 Now we want to create a new list with the answer to 'is this pollutant in toxic concentration?'
 """
@@ -73,7 +72,42 @@ for i in range(len(lpollutant)):
         ldanger.append('safe')
     d+=1
 #print(d)
-print(ldanger)
+"""
+We can shrink the data to our location 0-8° longitude and 51-60° latitude and our time frame of 2015-2016.
+"""
+sortdata=[]
+for i in range(len(ltime)):
+    tempo = []
+    if ltime[i][0:4] == '2015' or ltime[i][0:4] == '2016':
+        #print('time OK')
+        tempo.append(ltime[i])
+    if 0<float(llongitude[i])<8:
+        #print('long OK')
+        tempo.append(llongitude[i])
+    if 51<float(llatitude[i])<60:
+        #print('lat OK')
+        tempo.append(llatitude[i])
+    tempo.append(lpollutant[i])
+    tempo.append(lvalue[i])
+    tempo.append(lunit[i])
+    tempo.append(ldanger[i])
+    if len(tempo) == 7:
+        sortdata.append(tempo)
+#print(len(sortdata))
+
+"""
+sortdata is a list of list containing all the datapoints for the selected pollutants, the chosen location and time frame and the danger index of the given concentration.
+Exportation of the resulting dataset:
+
+fulldata=[['time','longitude','latitude','pollutant','value','unit','risk']]
+for i in range(len(sortdata)):
+    fulldata.append(sortdata[i])
+print(fulldata)
+
+for i in range(len(fulldata)):
+    with open('%s/Sorted_pollutant_data_2015-2016_North_Sea.csv' %path, 'a') as output:
+        output.write(';'.join(fulldata[i]) + '\n')
+"""
 
 """
 Note from discussion about the script of Thomas:
