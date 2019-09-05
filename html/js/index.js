@@ -1,16 +1,14 @@
 window.addEventListener("load", function(){
    
+    //---------Make Map--------------
     var corner1 = L.latLng(51,1);
     var corner2 = L.latLng(60, 8);
     var bounds = L.latLngBounds(corner1, corner2);
     
-    
     var mymap = L.map('mapid').fitBounds(bounds);
-    console.log('exec this')       
     
     var accessToken = "pk.eyJ1IjoiZXZlci1nZW9tYXIiLCJhIjoiY2swNmxtMzdpMDJnazNwbHZuc3lvaGt5cSJ9.BAHX_oY0LzawvUFoP82fsQ"
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXZlci1nZW9tYXIiLCJhIjoiY2swNmxtMzdpMDJnazNwbHZuc3lvaGt5cSJ9.BAHX_oY0LzawvUFoP82fsQ', 
+     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXZlci1nZW9tYXIiLCJhIjoiY2swNmxtMzdpMDJnazNwbHZuc3lvaGt5cSJ9.BAHX_oY0LzawvUFoP82fsQ', 
     {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 	   maxZoom: 10,
@@ -19,6 +17,7 @@ window.addEventListener("load", function(){
     }).addTo(mymap);
 
     
+    //---------Plot Markers--------------
     var fishIcon = L.icon({
     iconUrl: 'resources/fish.png',
     iconSize: [20, 20],
@@ -26,11 +25,14 @@ window.addEventListener("load", function(){
     popupAnchor: [0, 0],
 });
     
-    var markerCoors = [51.609704, 1.320196];
+    var markerCoors = [[51.609704, 1.320196],[51.65, 1.35]];
     
-    var marker = L.marker(markerCoors, {icon:fishIcon}).addTo(mymap);
-    marker.bindPopup("<b>Here's some good fish!</b><br>get over here capt'n.");
-
+    for(ii = 0; ii<markerCoors.length; ii++){
+        var marker = L.marker(markerCoors[ii], {icon:fishIcon}).addTo(mymap);
+        marker.bindPopup("<b>Here's some good fish!</b><br>get over here capt'n.");
+    }
+    
+    //---------Plot polygons--------------
     var polygon = L.polygon([
 	   [51.552125, 1.516433],
 	   [51.552125, 1.839815],
@@ -40,24 +42,24 @@ window.addEventListener("load", function(){
         
     polygon.bindPopup("<b>Just don't fish over here!</b><br>not allowed!");
  
+    
+    
+    //---------Plot Heatmaps--------------
     d3.csv('resources/fishprob.csv').then(function(data){
         
         var keys = Object.keys(data[0]);    
         var heatmap = []
         
         for(var ii = 0; ii<data.length; ii++){
-            
-            heatmap.push([data[ii][keys[0]], data[ii][keys[1]],data[ii][keys[2]]]);
-            
+    
+                heatmap.push([data[ii][keys[0]], data[ii][keys[1]],data[ii][keys[2]]]);
         }
         
         var heat = L.heatLayer(heatmap, 
                                {radius: 5}).addTo(mymap);
 
-        
         });
     
     console.log("dat workd jo!")        
-    
     
 });
