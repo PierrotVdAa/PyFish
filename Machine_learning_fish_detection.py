@@ -33,25 +33,29 @@ for i in range(1,len(t)-1):
 	if distance1<15:
 		#distance[k] = distance[k] + distance1; m[k] = m[k]+1
 		marker[i] = 1
-	if marker[i] == 0 and marker[i-1] ==1 :
+	if marker[i] != marker[i-1] :
 		lt2.append(lt[i-1])
 		ln2.append(ln[i-1])
 		p2.append(p[i-1])
 		temp2.append(temp[i-1])
 		s2.append(s[i-1])
 		m2.append(marker[i-1])
-	elif marker[i] == 0 and marker[i-1] == 0:
-		lt2.append(lt[i-1])
-		ln2.append(ln[i-1])
-		p2.append(p[i-1])
-		temp2.append(temp[i-1])
-		s2.append(s[i-1])
-		m2.append(marker[i-1])
+	#if marker[i] == 0 and marker[i-1] ==1 :
+	#	lt2.append(lt[i-1])
+	#	ln2.append(ln[i-1])
+	#	p2.append(p[i-1])
+	#	temp2.append(temp[i-1])
+	#	s2.append(s[i-1])
+	#	m2.append(marker[i-1])
+	#elif marker[i] == 0 and marker[i-1] == 0:
+	#	lt2.append(lt[i-1])
+	#	ln2.append(ln[i-1])
+	#	p2.append(p[i-1])
+	#	temp2.append(temp[i-1])
+	#	s2.append(s[i-1])
+	#	m2.append(marker[i-1])
 
 lt,ln,p,temp,s,marker = lt2,ln2,p2,temp2,s2,m2
- # K-neigbour Classifier
-    #y_train_predict = kn(X_train_train,y_train_train,X_train_test)
-    #y_predict[:,1] = kn(X_train,y_train[:,1],X_test)
 
 
 def kn(X_train,y_train,X_test,nn=5):
@@ -77,10 +81,11 @@ X_train_3 = s / np.linalg.norm(s)
 
 X_full = []
 for i in range(len(X_train_1)):
-	X_full.append(list([X_train_4[i],X_train_5[i],X_train_1[i],X_train_2[i],X_train_3[i],marker[i]]))
+	#X_full.append(list([X_train_4[i],X_train_5[i],X_train_1[i],X_train_2[i],X_train_3[i],marker[i]]))
+	X_full.append(list([X_train_1[i],X_train_2[i],X_train_3[i],marker[i]]))
 np.random.shuffle(X_full)
 X_full = np.array(X_full).T
-lens = len(m)
+lens = len(marker)
 X_train = X_full[:-1,0:int(lens/4)].T
 X_test = X_full[:-1,int(lens/4):].T
 y_train = X_full[-1,0:int(lens/4)]
