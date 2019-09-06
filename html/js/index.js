@@ -22,19 +22,66 @@ window.addEventListener("load", function(){
    
     //---------Plot Markers--------------
     
+       // Plot CD
+    
+    
     var fishIcon = L.icon({
-    iconUrl: 'resources/fish_OK.svg',
+    iconUrl: 'resources/fish_CD.svg',
     iconSize: [20, 20],
     iconAnchor: [10, 10],
     popupAnchor: [0, 0],
 });
     
-    var markerCoors = [[51.609704, 1.320196],[51.65, 1.35]];
+   
     
-    for(ii = 0; ii<markerCoors.length; ii++){
-        var marker = L.marker(markerCoors[ii], {icon:fishIcon}).addTo(mymap);
-        marker.bindPopup("<b>Here's some good fish!</b><br>get over here capt'n.");
-    }
+     d3.csv('resources/Sorted_Cd_data.csv').then(function(data){
+    //d3.csv('resources/fishprob.csv').then(function(data){
+        
+        let keys = Object.keys(data[0]);    
+        var scale = 5;  
+        var markerCoors = [];
+         
+        for(var ii = 0; ii<data.length; ii++){
+            
+            markerCoors.push([data[ii][keys[0]],data[ii][keys[1]]]);
+            
+        }
+         
+        for(var ii = 0; ii<markerCoors.length; ii++){
+            var marker = L.marker(markerCoors[ii], {icon:fishIcon}).addTo(mymap);
+            marker.bindPopup("<b>Here's some good fish!</b><br>get over here capt'n.");
+        }
+        });
+    
+//        // Plot Hg
+//    var fishIcon = L.icon({
+//    iconUrl: 'resources/fish_PB.svg',
+//    iconSize: [20, 20],
+//    iconAnchor: [10, 10],
+//    popupAnchor: [0, 0],
+//});
+//    
+//   
+//    
+//     d3.csv('resources/Sorted_Pb_data.csv').then(function(data){
+//    //d3.csv('resources/fishprob.csv').then(function(data){
+//        
+//        let keys = Object.keys(data[0]);    
+//        var scale = 5;  
+//        var markerCoors = [];
+//         
+//        for(var ii = 0; ii<data.length; ii++){
+//            
+//            markerCoors.push([data[ii][keys[0]],data[ii][keys[1]]]);
+//            
+//        }
+//         
+//        for(var ii = 0; ii<markerCoors.length; ii++){
+//            var marker = L.marker(markerCoors[ii], {icon:fishIcon}).addTo(mymap);
+//            marker.bindPopup("<b>Here's some good fish!</b><br>get over here capt'n.");
+//        }
+//        });
+//    
     
     //---------Plot polygons--------------
     
@@ -49,12 +96,12 @@ window.addEventListener("load", function(){
  
     //---------Plot Heatmaps--------------
    
-    d3.tsv('resources/waves.csv').then(function(data){
-    //d3.csv('resources/fishprob.csv').then(function(data){
+    //d3.tsv('resources/waves.csv').then(function(data){
+    d3.csv('resources/predicted.csv').then(function(data){
         
-        var keys = Object.keys(data[0]);    
+        let keys = Object.keys(data[0]);    
         var heatmap = []
-        var scale = 5;  
+        var scale = 10;  
         
         for(var ii = 0; ii<data.length; ii++){
     
@@ -62,12 +109,10 @@ window.addEventListener("load", function(){
         }
         
         var heat = L.heatLayer(heatmap, 
-                               {radius: 10}).addTo(mymap);
-        console.log(data)
+                               {radius: 15}).addTo(mymap);
         });
     
     console.log("dat workd jo!")        
-    
     
     
 });
