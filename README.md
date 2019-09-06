@@ -9,8 +9,8 @@ Legal thresholds for pollutants:
 
 | Pollutant ID |	threshold |
 | ------------ | ----------- |
-| As |	100 |
-| Cd |	50 |
-| Pb |	300 |
-| total-Hg |	1000 |
-| ZN	|120000 |
+| As (arsenic) |	100 |
+| Cd (cadmium)|	50 |
+| Pb (lead)|	300 |
+| total-Hg (mercury) |	1000 |
+| ZN (zinc)	|120000 |
