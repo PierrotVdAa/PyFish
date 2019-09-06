@@ -15,6 +15,7 @@
    crossorigin=""></script>    
 <script src="js/leaflet-heat.js"></script>
 <script src="js/d3.js"></script>
+<script src = "js/vue.js"></script>
 
     <!--own functions-->
 <script src = "js/index.js"></script>
@@ -25,5 +26,23 @@
 
     <div id="mapid"></div>
     <script src = "js/vue.js"></script>    
+    
+<!--
+    <div id = "sensor-list">
+        <h3 class = header>Sensors</h3>
+
+        <div v-for = "(item,index) in sensors" :class = "isActive(index)" v-on:click = "chooseSensor(index)">
+                {{item.name}}
+        </div>
+
+        <h3 class = header>Environment</h3>
+
+        <div v-for = "item in enviroment">
+                {{item.name}}
+    </div>
+
+       
+</div>     
+-->
     
 </body>
