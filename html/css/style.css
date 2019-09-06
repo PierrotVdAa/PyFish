@@ -28,7 +28,49 @@
 
 #mapid{
     
-    height:500px;
+    height:600px;
     
+}
+
+#sensor-list{
     
+    position: absolute;
+    bottom: 10%;
+    height: 80vh;
+    right: 0px;
+    width: 20vw; /* 0 */
+    transition: width 0.3s ease;
+    max-width: 800px;
+    min-width: 0;
+    border-radius: 20px 0px 0px 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: grid;
+    grid-template-columns: auto;
+    justify-items: end;	
+    align-items: center;
+    align-content: start;
+    grid-row-gap: 5px;
+}
+
+#sensor-list div {
+    index: 0;
+    font-family: IBMPlexMono, Arial;
+    padding-left: 5%;
+    
+    border-radius: 20px 0px 0px 20px;
+    width: 90%;
+    background-color: white;/* rgba(85, 174, 248, 0.6);*/
+    color: black;
+}
+
+#sensor-list h3 {
+    index: 0;
+    font-family: DoppioOne, Arial;
+    
+
+    /*    border-radius: 20px 0px 0px 20px;*/
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    
+    color: black;
 }
